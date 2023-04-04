@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <link rel="stylesheet" href="src/scss/main.scss" />
+        <script type="module" src="/src/ts/main.ts"></script>
+
+        <title>Solve ax+by+c=0</title>
+    </head>
+    <body>
+        <main>
+            <div class="container">
+                <h1>Entre une équation à résoudre dans \(\mathbb{Z}^2\)</h1>
+                <div class="equation-container">
+                    <math-field readonly class="equation">
+                        \placeholder[a]{6}x + \placeholder[b]{7}y + \placeholder[c]{12} = 0
+                    </math-field>
+                </div>
+                <button class="solve-button">Résoudre&nbsp;!</button>
+            </div>
+        </main>
+    </body>
+</html>

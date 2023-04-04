@@ -1,0 +1,20 @@
+{
+  "name": "diophantine-equation",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "typescript": "^4.9.3",
+    "vite": "^4.0.0"
+  },
+  "dependencies": {
+    "@cortex-js/compute-engine": "^0.12.2",
+    "mathlive": "^0.90.11",
+    "sass": "^1.60.0"
+  }
+}
