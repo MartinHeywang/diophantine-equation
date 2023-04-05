@@ -1,0 +1,66 @@
+.input .container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    // align-items: center;
+    justify-content: center;
+}
+
+.input__label {
+    font-size: 1.5rem;
+    font-family: sans-serif;
+    font-weight: bold;
+
+    margin: 0;
+}
+
+.input__math-field {
+    font-size: 3.5rem;
+    background-color: transparent;
+    border: none;
+    color: inherit;
+
+    padding: 0;
+    margin-top: .4em;
+    margin-bottom: .6em;
+
+    // mathlive specific CSS-properties
+    --placeholder-color: dodgerblue;
+
+    translate: -.2em; // magic number so the field is aligned with the text
+
+    &:focus {
+        // focus is already shown on the placeholders
+        outline: none;
+    }
+}
+
+// hide the virtual keyboard toggle
+@media not (pointer: coarse) {
+    .input__math-field::part(virtual-keyboard-toggle) {
+        display: none;
+    }
+}
+
+.input__solve-button {
+    --bgc: #{mix(dodgerblue, black, 80%)};
+
+    background-color: var(--bgc);
+    border: none;
+    border-radius: .2em;
+    padding: .4em 1em;
+    width: max-content;
+
+    font-size: 1.2rem;
+    color: #eee;
+
+    &:hover {
+        filter: brightness(70%);
+        cursor: pointer;
+    }
+
+    &:focus-visible {
+        outline: 2px solid var(--bgc);
+        outline-offset: 2px;
+    }
+}

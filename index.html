@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
     <head>
         <meta charset="UTF-8" />
         <link rel="icon" type="image/svg+xml" href="/vite.svg" />
@@ -8,19 +8,28 @@
         <link rel="stylesheet" href="src/scss/main.scss" />
         <script type="module" src="/src/ts/main.ts"></script>
 
-        <title>Solve ax+by+c=0</title>
+        <title>Résolveur d'équation diophantienne</title>
     </head>
     <body>
         <main>
-            <div class="container">
-                <h1>Entre une équation à résoudre dans \(\mathbb{Z}^2\)</h1>
-                <div class="equation-container">
-                    <math-field readonly class="equation">
-                        \placeholder[a]{6}x + \placeholder[b]{7}y + \placeholder[c]{12} = 0
-                    </math-field>
+            <section class="input">
+                <div class="container">
+                    <label class="input__label" for="input-equation-math-field"
+                        >Entre une équation à résoudre dans \(\mathbb{Z}^2\)&nbsp;:</label
+                    >
+                    <div class="input__math-field-container">
+                        <math-field
+                            readonly
+                            class="input__math-field"
+                            id="input-equation-math-field"
+                        >
+                            \placeholder[a]{6}x + \placeholder[b]{7}y +
+                            \placeholder[c]{12} = 0
+                        </math-field>
+                    </div>
+                    <button class="input__solve-button">Résoudre&nbsp;!</button>
                 </div>
-                <button class="solve-button">Résoudre&nbsp;!</button>
-            </div>
+            </section>
         </main>
     </body>
 </html>
