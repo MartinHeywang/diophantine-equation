@@ -1,1 +1,20 @@
-// nothing here yet
+.result .container {
+    padding: 5rem 0;
+}
+
+.result__title {
+    font-size: 1.8rem;
+}
+
+.result__solution {
+    border: 1px solid dodgerblue;
+    border-radius: .2em;
+    padding: 1em;
+
+}
+
+.solution__recap {
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin: 0;
+}

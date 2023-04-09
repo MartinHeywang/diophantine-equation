@@ -1,4 +1,5 @@
 import { MathfieldElement } from "mathlive";
+import { solve } from "./result";
 
 const submit = document.querySelector<HTMLButtonElement>(".input__solve-button")!;
 const incorrectMessage = document.querySelector<HTMLButtonElement>(".input__incorrect")!;
@@ -17,17 +18,17 @@ export function setupInputSection() {
 
         let incorrect = false;
 
-        const a = equation.getPromptValue("a");
-        const b = equation.getPromptValue("b");
-        const c = equation.getPromptValue("c");
+        const aStr = equation.getPromptValue("a");
+        const bStr = equation.getPromptValue("b");
+        const cStr = equation.getPromptValue("c");
 
         // debugger;
         const relativeNumbersRegex = /^-?[0-9]+$/g;
         const isIncorrect = (str: string) => incorrect || (str.match(relativeNumbersRegex) || []).length === 0;
 
-        incorrect = isIncorrect(a);
-        incorrect = isIncorrect(b);
-        incorrect = isIncorrect(c);
+        incorrect = isIncorrect(aStr);
+        incorrect = isIncorrect(bStr);
+        incorrect = isIncorrect(cStr);
 
         if(incorrect) {
             incorrectMessage.classList.add("input__incorrect--visible");
@@ -44,6 +45,14 @@ export function setupInputSection() {
             return;
         }
 
-        console.log({ a, b, c });
+        const a = parseInt(aStr);
+        const b = parseInt(bStr);
+        const c = parseInt(cStr);
+
+        console.log("Solving equation:");
+        console.log(`(a; b; c) = (${a}; ${b}; ${c})`);
+        console.log(`=> ${a}x + ${b}y + ${c} = 0`);
+
+        solve(a, b, c);
     });
 }
