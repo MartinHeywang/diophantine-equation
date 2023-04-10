@@ -1,8 +1,6 @@
 import { renderMathInElement } from "mathlive";
 
-const solutions = document.querySelector<HTMLDivElement>(".result__solution")!;
-const solutionTemplate =
-    document.querySelector<HTMLTemplateElement>("#solution-template")!;
+const solution = document.querySelector<HTMLDivElement>(".result__solution")!;
 
 // there can be
 // - no solutions,
@@ -11,33 +9,38 @@ const solutionTemplate =
 type Solutions = null | [string, string];
 
 export function solve(a: number, b: number, c: number) {
-    const cloned = solutionTemplate.content.cloneNode(true) as DocumentFragment;
-    const solution = cloned.querySelector<HTMLDivElement>(".solution")!;
-    const equation = solution.querySelector<HTMLParagraphElement>(".solution__recap")!;
-    equation.textContent = `Les solutions de ${equationLatex(
-        a,
-        b,
-        c
-    )} sont [${findSolutions(a, b, c)?.join("; ")}]`;
+    const recap = solution.querySelector<HTMLParagraphElement>(".solution__recap")!;
+
+    const equationStr = formatEquationLatex(a, b, c);
+    const solutions = findSolutions(a, b, c);
+    const solutionsStr = formatSolutionsString(equationStr, solutions);
+
+    recap.textContent = solutionsStr;
 
     renderMathInElement(solution);
 
-    solutions.innerHTML = "";
-    solutions.appendChild(solution);
+    solution.innerHTML = "";
+    solution.appendChild(recap);
 
     solution.scrollIntoView({ behavior: "smooth" });
 }
 
 function findSolutions(a: number, b: number, c: number): Solutions {
-    console.log(`called find solution with (a, b, c) = (${a}, ${b}, ${c})`);
     if (a === 0 && b === 0) {
-        return c === 0 ? ["k", "k'"] : null;
+        return c === 0 ? ["k", "m"] : null;
     }
+
+    // in the two following cases, the equation is affine
+    // but the solutions can only be integers
     if (a === 0) {
-        return ["k", (-c / a).toString()];
+        if (-c % b !== 0) return null;
+
+        return ["k", (-c / b).toString()];
     }
     if (b === 0) {
-        return [(-c / b).toString(), "k"];
+        if (-c % a !== 0) return null;
+
+        return [(-c / a).toString(), "k"];
     }
 
     // at this point we're sure a and b are non-zero
@@ -81,14 +84,18 @@ function findSolutions(a: number, b: number, c: number): Solutions {
     // so y-y0 = ak (with k an integer)
     // so y = ak + y0
 
-    let y = `${a}k + ${y0}`;
+    let y = `${a}k`;
+    if (y0 < 0) y += ` - ${-y0}`;
+    if (y0 > 0) y += ` + ${y0}`;
 
     // now we have
     // a(x-x0) = -b(ak + y0 - y0)
     // x-x0 = -bk
     // so x = -bk + x0 (k is the same as before)
 
-    let x = `${-b}k + ${x0}`;
+    let x = `${-b}k`;
+    if (x0 < 0) x += ` - ${-x0}`;
+    if (x0 > 0) x += ` + ${x0}`;
 
     return [x, y];
 }
@@ -163,11 +170,7 @@ function bezout(a: number, b: number) {
     return result;
 }
 
-// fixme: remove this, only for debugging purposes
-// @ts-ignore
-window.bezout = bezout;
-
-function equationLatex(a: number, b: number, c: number) {
+function formatEquationLatex(a: number, b: number, c: number) {
     let result = "\\(";
 
     if (a !== 0) {
@@ -183,7 +186,7 @@ function equationLatex(a: number, b: number, c: number) {
     }
     if (c !== 0) {
         if (c < 0) result += "-";
-        else if (c > 0) result += "+";
+        if (c > 0 && (a !== 0 || b !== 0)) result += "+";
         result += `${Math.abs(c)}`;
     }
 
@@ -192,6 +195,34 @@ function equationLatex(a: number, b: number, c: number) {
     }
 
     result += " = 0\\)";
+
+    return result;
+}
+
+function formatSolutionsString(equationLatex: string, solutions: Solutions) {
+    if (solutions === null) {
+        return `L'équation ${equationLatex} n'admet aucune solution dans \\(\\mathbb{Z}^2\\).`;
+    }
+
+    let result = `L'ensemble des solutions de l'équation ${equationLatex} est `;
+
+    // variables : as there are an infinity of solutions, they depend on some variable
+    // which is detected and stored in this set
+    const variables = [];
+    if (solutions[0].includes("k") || solutions[1].includes("k")) variables.push("k");
+    if (solutions[0].includes("m") || solutions[1].includes("m")) variables.push("m");
+
+    result += "\\("; // latex inline delimiter
+    result += "\\lbrace";
+
+    result += `(${solutions[0]}, ${solutions[1]})`;
+    if (variables.length !== 0) {
+        result += "\\text{ où }";
+        result += `${Array.from(variables).join(", ")} \\in \\mathbb{Z}`;
+    }
+
+    result += "\\rbrace";
+    result += "\\).";
 
     return result;
 }
