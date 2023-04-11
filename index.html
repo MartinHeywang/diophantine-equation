@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8" />
+        <link rel="icon" type="image/svg+xml" href="/diophantine-equation/vite.svg" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        
+        
+
+        <title>Résolveur d'équation diophantienne</title>
+      <script type="module" crossorigin src="/diophantine-equation/assets/index-05a0dd7e.js"></script>
+      <link rel="stylesheet" href="/diophantine-equation/assets/index-29756bad.css">
+    </head>
+    <body>
+        <main>
+            <section class="input">
+                <div class="container">
+                    <h1 class="input__title">Résolveur d'équations diophantiennes</h1>
+
+                    <label class="input__label" for="input-equation-math-field"
+                        >Entre une équation diophantienne à résoudre dans
+                        \(\mathbb{Z}^2\)&nbsp;:</label
+                    >
+                    <div class="input__math-field-container">
+                        <math-field
+                            readonly
+                            class="input__math-field"
+                            id="input-equation-math-field"
+                        >
+                            \placeholder[a]{6}x + \placeholder[b]{7}y +
+                            \placeholder[c]{12} = 0
+                        </math-field>
+                    </div>
+                    <div class="input__submit-zone">
+                        <button class="input__solve-button">Résoudre&nbsp;!</button>
+                        <p class="input__incorrect" aria-hidden="true">
+                            Les coefficients doivent être des entiers relatifs&nbsp;!
+                        </p>
+                    </div>
+                </div>
+            </section>
+            <section class="result">
+                <div class="container">
+                    <template id="solution-template">
+                        <div class="solution">
+                            <p class="solution__recap"></p>
+                        </div>
+                    </template>
+
+                    <div class="result__solution">
+                        <p class="result__no-solution">
+                            C'est ici qu'apparaîtra la résolution de l'équation.
+                        </p>
+                        <p class="solution__recap"></p>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </body>
+</html>
